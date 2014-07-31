@@ -1,0 +1,11 @@
+vagrant-local:
+    vm:
+        network:
+            private_network: 10.0.0.100
+            forwarded_port: 
+                host: '8080'
+                guest: '80'
+            bridge_type: 'en0: Wi-Fi (AirPort)'
+    project:
+        name: circlewf.com
+        location: ./
