@@ -14,7 +14,7 @@ $project_name = data['project']['name']
 $project_location = data['project']['location']
 $network_ip = data['vm']['network']['private_network']
 $forward_host = data['vm']['network']['forwarded_port']['host']
-$forward_guest = data['vm']['network']['forwarded_port']['host']
+$forward_guest = data['vm']['network']['forwarded_port']['guest']
 #$bridge_type = data['vm']['network']['bridge_type']
 
 

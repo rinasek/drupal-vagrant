@@ -1,0 +1,1 @@
+Before running vagrant up please run 
