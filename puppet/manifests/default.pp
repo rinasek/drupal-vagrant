@@ -60,9 +60,9 @@ class { '::mysql::server':
   override_options => $override_options
 }
 
-mysql::db { $project:
-  user     => $project,
-  password => $project,
+mysql::db { dev:
+  user     => dev,
+  password => dev,
   host     => 'localhost',
   grant    => ['ALL'],
 }
