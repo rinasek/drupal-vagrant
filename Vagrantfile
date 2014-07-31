@@ -4,7 +4,6 @@
 
 # Requirments 
 require 'yaml'
-Vagrant.require_plugin "vagrant-hostmanager"
 
 # Configuration variables
 configValues = YAML.load_file("./config.yml")
@@ -23,6 +22,10 @@ $forward_guest = data['vm']['network']['forwarded_port']['host']
 
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
+
+unless Vagrant.has_plugin?("vagrant-hostmanager")
+  raise 'some-plugin is not installed!'
+end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
