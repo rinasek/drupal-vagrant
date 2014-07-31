@@ -1,8 +1,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require 'yaml'
 
+# Requirments 
+require 'yaml'
+Vagrant.require_plugin "vagrant-hostmanager"
+
+# Configuration variables
 configValues = YAML.load_file("./config.yml")
 data = configValues['vagrant-local']
 
