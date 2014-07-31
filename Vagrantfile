@@ -24,7 +24,12 @@ $forward_guest = data['vm']['network']['forwarded_port']['host']
 VAGRANTFILE_API_VERSION = "2"
 
 unless Vagrant.has_plugin?("vagrant-hostmanager")
-  raise 'some-plugin is not installed!'
+  puts "--- WARNING ---"
+  puts "I'm using Vagrant Hostmanager, https://github.com/smdahlen/vagrant-hostmanager"
+  puts "It's used to make your life and development easier'"
+  puts "Since it is not installed please run: "
+  puts "'vagrant plugin install vagrant-hostmanager'"
+  puts "to make this machine function properly"
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
