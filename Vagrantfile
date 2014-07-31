@@ -30,6 +30,7 @@ unless Vagrant.has_plugin?("vagrant-hostmanager")
   puts "Since it is not installed please run: "
   puts "'vagrant plugin install vagrant-hostmanager'"
   puts "to make this machine function properly"
+  raise "Vagrant boot stopped!"
 end
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
