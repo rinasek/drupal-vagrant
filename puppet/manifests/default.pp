@@ -25,7 +25,7 @@ class { 'apt':
   always_apt_update => true,
 }
 
-$sysPackages = [ 'build-essential', 'curl']
+$sysPackages = [ 'build-essential', 'curl', 'php5']
 package { $sysPackages:
   ensure => "installed",
   require => Exec['apt-get update'],
@@ -50,7 +50,8 @@ package { php-pear:
     ensure => installed,
   }
 
-package { 'php-console-table':
+
+package { ['php-console-table','libapache2-mod-php5','php5-gd']:
     ensure => installed,
     require => Package['php-pear']
   }
@@ -58,6 +59,21 @@ package { 'php-console-table':
 class { '::mysql::server':
   root_password    => 'root',
   override_options => $override_options
+}
+class { '::mysql::bindings':
+  php_enable => 1,
+  perl_enable => 1
+}
+
+augeas { "php.ini":
+  notify  => Service[httpd],
+  require => Package[php5],
+  context => "/files/etc/php5/apache2/php.ini/PHP",
+  changes => [
+    "set post_max_size 10M",
+    "set upload_max_filesize 50M",
+    "set display_errors On",
+  ];
 }
 
 mysql::db { dev:

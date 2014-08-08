@@ -61,7 +61,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "./", "/vagrant", id: "vagrant-root"
   config.vm.synced_folder $project_location, "/var/www"
 
-# Enable shell provisioning to bootstrap puppet
+  # Enable shell provisioning to bootstrap puppet
   config.vm.provision :shell, :path => "bootstrap.sh"
 
 
@@ -75,6 +75,10 @@ end
     puppet.manifests_path = "puppet/manifests"
     puppet.module_path = "puppet/modules"
     puppet.options = ['--verbose']
+  # Introduce variables to Puppet from VagrantFile
+    puppet.facter = {
+      "test_variable" => "test"
+    }
   end
 
 
