@@ -66,7 +66,7 @@ class { '::mysql::bindings':
 }
 
 augeas { "php.ini":
-  notify  => Service[httpd],
+  notify  => Service[apache2],
   require => Package[php5],
   context => "/files/etc/php5/apache2/php.ini/PHP",
   changes => [
@@ -75,7 +75,12 @@ augeas { "php.ini":
     "set display_errors On",
   ];
 }
-
+augeas { "override_config":
+  require => Class['apache'],
+  changes => [
+    "set /files/etc/apache2/sites-available/15-default.conf/VirtualHost/Directory/directive[2]/arg All",
+  ],
+}
 mysql::db { dev:
   user     => dev,
   password => dev,
