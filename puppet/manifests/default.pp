@@ -77,6 +77,7 @@ augeas { "php.ini":
 }
 augeas { "override_config":
   require => Class['apache'],
+  notify  => Service[apache2],
   changes => [
     "set /files/etc/apache2/sites-available/15-default.conf/VirtualHost/Directory/directive[2]/arg All",
   ],
@@ -95,4 +96,16 @@ exec { 'drush_install':
 }
 
 
+class finalDrupalInstall {
+  exec { 'drupal_install':
+    cwd => '/var/www',
+    command => 'drush site-install -y --db-url=mysql://dev:dev@localhost:3306/dev --account-name=admin --account-pass=admin --site-name=dev',
+    creates => '/var/www/sites/default/settings.php',
+    returns => '0',
+  }
+}
+
+class { "finalDrupalInstall":
+  stage => last,
+}
 
