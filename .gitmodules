@@ -21,4 +21,4 @@
 	url = https://github.com/puppetlabs/puppetlabs-git.git
 [submodule "puppet/modules/php"]
 	path = puppet/modules/php
-	url = git@github.com:jippi/puppet-php.git
+	url = https://github.com/jippi/puppet-php.git
