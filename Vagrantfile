@@ -15,7 +15,8 @@ $project_location = data['project']['location']
 $network_ip = data['vm']['network']['private_network']
 $forward_host = data['vm']['network']['forwarded_port']['host']
 $forward_guest = data['vm']['network']['forwarded_port']['guest']
-#$bridge_type = data['vm']['network']['bridge_type']
+$db_import = data['drupal']['database_filename']
+
 
 
 
@@ -77,7 +78,7 @@ end
     puppet.options = ['--verbose']
   # Introduce variables to Puppet from VagrantFile
     puppet.facter = {
-      "test_variable" => "test"
+      "latestdatabase" => $db_import
     }
   end
 

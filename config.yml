@@ -8,4 +8,6 @@ vagrant-local:
             bridge_type: 'en0: Wi-Fi (AirPort)'
     project:
         name: circlewf.com
-        location: ./new
+        location: ./paff
+    drupal:
+        database_filename: latest.sql

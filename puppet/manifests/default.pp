@@ -65,6 +65,8 @@ class { '::mysql::bindings':
   perl_enable => 1
 }
 
+# Use Augeas to modify php.ini and default apache config
+
 augeas { "php.ini":
   notify  => Service[apache2],
   require => Package[php5],
@@ -82,6 +84,9 @@ augeas { "override_config":
     "set /files/etc/apache2/sites-available/15-default.conf/VirtualHost/Directory/directive[2]/arg All",
   ],
 }
+
+# Create database
+
 mysql::db { dev:
   user     => dev,
   password => dev,
@@ -89,13 +94,14 @@ mysql::db { dev:
   grant    => ['ALL'],
 }
 
+# Install drush
 exec { 'drush_install':
   command => '/usr/bin/pear channel-discover pear.drush.org && /usr/bin/pear install drush/drush',
   require => Package['php-console-table'],
   creates => '/usr/bin/drush'
 }
 
-
+# Install drupal and setup database
 class finalDrupalInstall {
   exec { 'drupal_install':
     cwd => '/var/www',
@@ -104,7 +110,13 @@ class finalDrupalInstall {
     creates => '/var/www/sites/default/settings.php',
     returns => '0',
   }
+  exec { 'db_import' :
+    cwd => '/var/www',
+    command =>"drush sql-drop -y && drush sql-cli < /vagrant/'$latestdatabase'",
+    onlyif =>'/usr/bin/test -f /var/www/sites/default/settings.php',
+  }
 }
+
 
 class { "finalDrupalInstall":
   stage => last,
