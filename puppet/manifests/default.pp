@@ -108,7 +108,7 @@ class finalDrupalInstall {
     command => 'drush site-install -y --db-url=mysql://dev:dev@localhost:3306/dev --account-name=admin --account-pass=admin --site-name=dev',
     onlyif => '/usr/bin/test -f /var/www/sites/default/default.settings.php',
     creates => '/var/www/sites/default/settings.php',
-    returns => '0',
+    returns => '1',
   }
   exec { 'db_import' :
     cwd => '/var/www',

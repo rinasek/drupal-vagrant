@@ -42,6 +42,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.box = "puppetlabs-precise64"
   config.vm.box_url = "http://puppet-vagrant-boxes.puppetlabs.com/ubuntu-server-12042-x64-vbox4210-nocm.box"
+  config.vm.provider "virtualbox" do |v|
+    v.memory = 1024
+    v.cpus = 2
+  
 
   # VM's host name, will be picked up by hostmanager plugin, if available
   config.vm.hostname = "development." + $project_name
