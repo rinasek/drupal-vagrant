@@ -62,6 +62,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
   end
+
+  # Forwarding keys from host to guest
+  config.ssh.forward_agent = true
+
   
   # Mount folders
   config.vm.synced_folder "./", "/vagrant", id: "vagrant-root"
