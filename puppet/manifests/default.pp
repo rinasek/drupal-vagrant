@@ -36,7 +36,7 @@ include git
 include composer
 
 
-# Apache, PHP, MYSQL
+# Apache, PHP, MYSQL and all other goodies
 
 class { "apache":
 mpm_module => 'prefork',
@@ -51,13 +51,19 @@ package { php-pear:
     ensure => installed,
   }
 
-
-package { ['php-console-table','libapache2-mod-php5','php5-gd','php5-curl']:
+package { ['php-console-table','libapache2-mod-php5','php5-gd','php5-curl', 'python-software-properties', 'python', 'g++', 'make'] :
     ensure => installed,
     require => [Package['php-pear'], 
                   Exec['apt-get update']
                 ]
   }
+
+# Adding repo for Node JS
+apt::ppa { 'ppa:chris-lea/node.js':
+ require => Exec['apt-get update'],
+ }
+
+
 
 class { '::mysql::server':
   root_password    => 'root',
@@ -107,7 +113,7 @@ exec { 'drush_install':
 }
 
 # Install drupal and setup database
-class finalDrupalInstall {
+class finalInstall {
   exec { 'drupal_install':
     cwd => '/var/www',
     command => 'drush site-install -y --db-url=mysql://dev:dev@localhost:3306/dev --account-name=admin --account-pass=admin --site-name=dev',
@@ -120,10 +126,16 @@ class finalDrupalInstall {
     command =>"drush sql-drop -y && drush sql-cli < /vagrant/'$latestdatabase' && drush vset cache 0 && drush vset block_cache 0 && drush vset preprocess_css 0 && drush vset preprocess_js 0 && drush cc all",
     onlyif =>'/usr/bin/test -f /var/www/sites/default/settings.php',
   }
+  package { nodejs:
+    ensure => installed,
+  }
+  exec {'grunt_cli':
+    command => 'npm install -g grunt-cli',
+    require => Package['nodejs'],
+  }
 }
 
 
-class { "finalDrupalInstall":
+class { "finalInstall":
   stage => last,
 }
-
