@@ -31,6 +31,7 @@ package { $sysPackages:
   require => Exec['apt-get update'],
   }
 
+
 include git
 include composer
 
@@ -51,9 +52,11 @@ package { php-pear:
   }
 
 
-package { ['php-console-table','libapache2-mod-php5','php5-gd']:
+package { ['php-console-table','libapache2-mod-php5','php5-gd','php5-curl']:
     ensure => installed,
-    require => Package['php-pear']
+    require => [Package['php-pear'], 
+                  Exec['apt-get update']
+                ]
   }
 
 class { '::mysql::server':
@@ -75,6 +78,8 @@ augeas { "php.ini":
     "set post_max_size 10M",
     "set upload_max_filesize 50M",
     "set display_errors On",
+    "set memory_limit -1",
+    "set post_max_size 64M"
   ];
 }
 augeas { "override_config":
@@ -112,7 +117,7 @@ class finalDrupalInstall {
   }
   exec { 'db_import' :
     cwd => '/var/www',
-    command =>"drush sql-drop -y && drush sql-cli < /vagrant/'$latestdatabase'",
+    command =>"drush sql-drop -y && drush sql-cli < /vagrant/'$latestdatabase' && drush vset cache 0 && drush vset block_cache 0 && drush vset preprocess_css 0 && drush vset preprocess_js 0 && drush cc all",
     onlyif =>'/usr/bin/test -f /var/www/sites/default/settings.php',
   }
 }

@@ -7,7 +7,7 @@ vagrant-local:
                 guest: '80'
             bridge_type: 'en0: Wi-Fi (AirPort)'
     project:
-        name: minja.com
-        location: ./paff
+        name: peoplematter.com
+        location: ./peoplematter
     drupal:
-        database_filename: latest.sql
+        database_filename: pm2014.sql
