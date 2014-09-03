@@ -69,7 +69,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   # Mount folders
   config.vm.synced_folder "./", "/vagrant", id: "vagrant-root"
-  config.vm.synced_folder $project_location, "/var/www"
+  config.vm.synced_folder $project_location, "/var/www", type: "nfs"
 
   # Enable shell provisioning to bootstrap puppet
   config.vm.provision :shell, :path => "bootstrap.sh"
