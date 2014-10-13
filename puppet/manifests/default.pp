@@ -124,7 +124,7 @@ class finalInstall {
   exec { 'db_import' :
     cwd => '/var/www',
     command =>"drush sql-drop -y && drush sql-cli < /vagrant/'$latestdatabase' && drush vset cache 0 && drush vset block_cache 0 && drush vset preprocess_css 0 && drush vset preprocess_js 0 && drush cc all",
-    onlyif =>'/usr/bin/test -f /var/www/sites/default/settings.php',
+    onlyif => [ "/usr/bin/test -f /var/www/sites/default/settings.php && test -f /vagrant/'$latestdatabase' "],
   }
   package { nodejs:
     ensure => installed,
