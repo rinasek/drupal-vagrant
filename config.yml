@@ -1,13 +1,17 @@
+
 vagrant-local:
     vm:
         network:
-            private_network: 10.0.0.100
+            # Set new IP if you have multiple Vagrant machines running
+            private_network: 10.0.1.100
             forwarded_port: 
                 host: '8080'
                 guest: '80'
             bridge_type: 'en0: Wi-Fi (AirPort)'
     project:
-        name: peoplematter.com
-        location: ./peoplematter
+        #Setup project name and location folder
+        name: 
+        location: ./
     drupal:
-        database_filename: pm2014.sql
+        # If there is database dump set its name
+        database_filename: 
