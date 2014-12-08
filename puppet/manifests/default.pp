@@ -53,7 +53,7 @@ package { php-pear:
 
 package { ['php-console-table','libapache2-mod-php5','php5-gd','php5-curl', 'python-software-properties', 'python', 'g++', 'make'] :
     ensure => installed,
-    require => [Package['php-pear'], 
+    require => [Package['php-pear'],
                   Exec['apt-get update']
                 ]
   }
@@ -124,7 +124,7 @@ class finalInstall {
   exec { 'db_import' :
     cwd => '/var/www',
     command =>"drush sql-drop -y && drush sql-cli < /vagrant/'$latestdatabase' && drush vset cache 0 && drush vset block_cache 0 && drush vset preprocess_css 0 && drush vset preprocess_js 0 && drush cc all",
-    onlyif =>'/usr/bin/test -f /var/www/sites/default/settings.php && /usr/bin/test -f /vagrant/$latestdatabase',
+    onlyif =>"/usr/bin/test -f /var/www/sites/default/settings.php && /usr/bin/test -f /vagrant/'$latestdatabase'",
   }
   package { nodejs:
     ensure => installed,

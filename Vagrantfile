@@ -2,7 +2,7 @@
 # vi: set ft=ruby :
 
 
-# Requirments 
+# Requirments
 require 'yaml'
 
 # Configuration variables
@@ -46,7 +46,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.memory = 2048
     v.cpus = 2
   end
-  
+
 
   # VM's host name, will be picked up by hostmanager plugin, if available
   config.vm.hostname = "local." + $project_name
@@ -66,10 +66,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Forwarding keys from host to guest
   config.ssh.forward_agent = true
 
-  
+
   # Mount folders
   config.vm.synced_folder "./", "/vagrant", id: "vagrant-root"
-  config.vm.synced_folder $project_location, "/var/www" #, type: "nfs"
+  config.vm.synced_folder $project_location, "/var/www"
 
   # Enable shell provisioning to bootstrap puppet
   config.vm.provision :shell, :path => "bootstrap.sh"
