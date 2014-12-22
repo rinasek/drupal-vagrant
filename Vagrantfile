@@ -37,6 +37,19 @@ unless Vagrant.has_plugin?("vagrant-hostmanager")
   raise "Vagrant boot stopped! Install missing plugins!"
 end
 
+unless Vagrant.has_plugin?("vagrant-triggers")
+  puts "#########################################################"
+  puts "#---------------------- WARNING ------------------------#"
+  puts "#          I'm using Vagrant Trigers,                   #"
+  puts "#    https://github.com/emyl/vagrant-triggers           #"
+  puts "#   It's used to make your life and development easier  #"
+  puts "#        Since it is not installed please run:          #"
+  puts "#     'vagrant plugin install vagrant-triggers   '      #"
+  puts "#          to make this VM function properly            #"
+  puts "#########################################################"
+  raise "Vagrant boot stopped! Install missing plugins!"
+end
+
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
 
@@ -45,6 +58,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
     v.memory = 2048
     v.cpus = 2
+  end
+
+  config.trigger.before [:up, :provision], :stdout => true do
+    info 'Starting SSH agent on machine'
+    system ("eval $(ssh-agent)")
+    info 'Adding public key to ssh agent so it can be used in vagrant'
+    system ("ssh-add")
   end
 
 
