@@ -88,6 +88,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
 
   # Mount folders
+  config.vm.synced_folder "~/.drush", "/home/vagrant/.drush", id: "drush"
   config.vm.synced_folder "./", "/vagrant", id: "vagrant-root"
   config.vm.synced_folder $project_location, "/var/www"
 
