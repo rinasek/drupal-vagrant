@@ -1,1 +1,1 @@
-Before running vagrant up please run 
+Instructiosn comming soon.
