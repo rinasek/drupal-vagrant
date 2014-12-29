@@ -2,16 +2,18 @@
 vagrant-local:
     vm:
         network:
-            # Set new IP if you have multiple Vagrant machines running
-            private_network: 10.0.1.100
-            forwarded_port: 
+            # Set new IP if you have multiple Vagrant machines running i.e. 10.0.0.101
+            private_network:
+            forwarded_port:
                 host: '8080'
                 guest: '80'
+            # If trying to setup bridged connection set this to adapter that can be used
             bridge_type: 'en0: Wi-Fi (AirPort)'
     project:
-        #Setup project name and location folder
-        name: 
+        # Setup project name. Project name will determine URL at which project can be accessed with prefix "local." i.e. "local.example.com"
+        name:
+        # By default location is Vagrant root. Change this to proepr folder i.e. if you cloned project into "example" directory location will be ./example
         location: ./
     drupal:
-        # If there is database dump set its name
-        database_filename: 
+        # If there is database dump set its name i.e. dump.sql. By default it looks for file in Vagrant root.
+        database_filename:
