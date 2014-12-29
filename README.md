@@ -12,7 +12,7 @@ It does couple of things:
   and clear caches
   * If there are drush aliases on host they will be available on vagrant (.drush is mounted)
   * Private keys from host machine will be forwared to vagrant so they can be used.
-  This can be tested by loging into vagrant (vagrant ssh) and running ssh -T git@github.com
+  This can be tested by loging into vagrant (`vagrant ssh`) and running `ssh -T git@github.com`
 
 
 ## Getting Vagrant up
