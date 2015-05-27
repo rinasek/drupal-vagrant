@@ -116,7 +116,7 @@ exec { 'drush_install':
 class finalInstall {
   exec { 'drupal_install':
     cwd => '/var/www',
-    command => 'drush site-install -y --db-url=mysql://dev:dev@localhost:3306/dev --account-name=admin --account-pass=admin --site-name=dev',
+    command => 'drush site-install minimal -y --db-url=mysql://dev:dev@localhost:3306/dev --account-name=admin --account-pass=admin --site-name=dev',
     onlyif => '/usr/bin/test -f /var/www/sites/default/default.settings.php',
     creates => '/var/www/sites/default/settings.php',
     returns => '1',
